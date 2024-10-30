@@ -33,9 +33,10 @@ public class UIManager : MonoBehaviour
     private InputAction mouseAction;
     private InputAction deltaAction;
     private InputAction selectAction;
-#endregion
+    public Camera mainCamera;
+    #endregion
 
-#region Events
+    #region Events
     public delegate void TargetSelectedEventHandler(Vector3 worldPosition);
     public event TargetSelectedEventHandler TargetSelected;
 #endregion
@@ -73,6 +74,14 @@ public class UIManager : MonoBehaviour
 #region Update
     void Update()
     {
+        // Get the mouse position in screen coordinates
+        Vector3 mousePosition = Input.mousePosition;
+
+        // Create a ray from the camera to the mouse position
+        Ray ray = mainCamera.ScreenPointToRay(mousePosition);
+
+        // Calculate the intersection point  
+        float distance;
         MoveCrosshair();
         SelectTarget();
     }
@@ -80,9 +89,12 @@ public class UIManager : MonoBehaviour
     private void MoveCrosshair() 
     {
         Vector2 mousePos = mouseAction.ReadValue<Vector2>();
+        Vector3 mp = new Vector3(mousePos.x, 1, mousePos.y);
 
         // FIXME: Move the crosshair position to the mouse position (in world coordinates)
-        // crosshair.position = ...;
+        //Debug.Log(mousePos);
+        Debug.Log(crosshair.position);
+        crosshair.position = mp/100;
     }
 
     private void SelectTarget()

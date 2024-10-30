@@ -14,9 +14,12 @@ public class MarbleMove : MonoBehaviour
 
 #region Parameters
     [SerializeField] private float speed = 2f;
-#endregion 
+    public Camera mainCamera;
+    public Plane boardPlane;
+    public LayerMask groundLayer;
+    #endregion
 
-#region State
+    #region State
     private Vector3? target;    // null if there is no current target
 #endregion 
 
@@ -73,9 +76,9 @@ public class MarbleMove : MonoBehaviour
             rigidbody.angularVelocity = Vector3.zero;
         }
     }
-#endregion 
+    #endregion
 
-#region Event handlers
+    #region Event handlers
     public void OnTargetSelected(Vector3 worldPosition)
     {        
         target = worldPosition;
